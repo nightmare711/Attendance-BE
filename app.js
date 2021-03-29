@@ -24,4 +24,4 @@ app.use((req,res,next) => {
 
 app.use(UserRoute)
 
-mongoose.connect('mongodb+srv://blockmagic:mGpoGQWeo2uDZD4q@cluster0.563wo.mongodb.net/users').then(() => app.listen(4000, () => console.log('app listen at port 4000'))).catch(err => console.log(err))
+mongoose.connect('mongodb+srv://blockmagic:mGpoGQWeo2uDZD4q@cluster0.563wo.mongodb.net/users').then(() => app.listen(process.env.PORT || 3000, () => console.log('app listen at port 4000'))).catch(err => console.log(err))
