@@ -2,6 +2,9 @@ const express = require('express')
 const UserRoute = require('./routes/users')
 const cloudinary = require('cloudinary').v2
 const mongoose = require('mongoose')
+const AuthController = require('./middleware/auth')
+const session = require('express-session')
+const AuthRoute = require('./routes/auth')
 var bodyParser = require('body-parser')
 
 const app = express()
@@ -21,7 +24,9 @@ app.use((req,res,next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     next()
 })
+app.use(AuthRoute)
+app.use(AuthController.isAuth)
 
 app.use(UserRoute)
 
-mongoose.connect('mongodb+srv://blockmagic:mGpoGQWeo2uDZD4q@cluster0.563wo.mongodb.net/users').then(() => app.listen(process.env.PORT || 3000, () => console.log('app listen at port 4000'))).catch(err => console.log(err))
+mongoose.connect('mongodb+srv://blockmagic:mGpoGQWeo2uDZD4q@cluster0.563wo.mongodb.net/users').then(() => app.listen(4000, () => console.log('app listen at port 4000'))).catch(err => console.log(err))

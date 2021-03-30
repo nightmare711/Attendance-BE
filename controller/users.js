@@ -1,5 +1,6 @@
 const User = require('../models/users')
 const cloudinary = require('cloudinary').v2
+const jwtHelper = require("../helper/jwt.helper")
 
 exports.getUsers = (req,res,next) => {
     return User.find().then(result => res.status(200).json({
@@ -56,6 +57,14 @@ exports.postUser = (req,res,next) => {
                 phoneNumber,
                 imgUrl: resUp.secure_url
             })
+            console.log({name,
+                isTeacher,
+                email,
+                password,
+                dateOfBirth,
+                createdAt,
+                phoneNumber,
+                imgUrl: resUp.secure_url})
             return user.save().then(result => res.status(201).json({
                 message: 'Post created successfully',
                 user: result
@@ -66,7 +75,7 @@ exports.postUser = (req,res,next) => {
         } else {
             return res.status(501).json({
                 message: 'Something went wrong',
-                error: err
+                error: error
             })
         }
     });
