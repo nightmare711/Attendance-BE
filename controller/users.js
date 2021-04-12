@@ -1,6 +1,21 @@
 const User = require('../models/users')
 const cloudinary = require('cloudinary').v2
-const jwtHelper = require("../helper/jwt.helper")
+
+exports.getUser = (req,res,next) => {
+    const _id = req.params.id
+    return User.findById(_id).then(result =>{
+        if(result) {
+            return res.status(201).json({
+                message: 'Get user successfully',
+                user: result
+            })
+        }
+        return res.status(404).json({
+            message: "The student couldn't found",
+            user: []
+        })
+    }).n
+}
 
 exports.getUsers = (req,res,next) => {
     return User.find().then(result => res.status(200).json({
@@ -82,15 +97,16 @@ exports.postUser = (req,res,next) => {
 }
 exports.updateUser = async (req,res,next) => {
     const _id = req.params.id
-    const name = req.body.name
-    const isTeacher = req.body.isTeacher
-    const email = req.body.email
-    const password = req.body.password
-    const dateOfBirth = req.body.dateOfBirth
-    const createdAt = new Date()
-    const phoneNumber = req.body.phoneNumber
-    const base64 = req.body.base64
     const user = await User.findById(_id)
+    const name = req.body.name 
+    const isTeacher = req.body.isTeacher || user.isTeacher
+    const email = req.body.email || user.email
+    const password = req.body.password || user.password
+    const dateOfBirth = req.body.dateOfBirth || user.dateOfBirth
+    const createdAt = new Date()
+    const phoneNumber = req.body.phoneNumber || user.phoneNumber
+    const base64 = req.body.base64
+    
     user.name = name
     user.isTeacher = isTeacher
     user.email = email

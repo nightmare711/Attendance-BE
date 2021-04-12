@@ -3,12 +3,17 @@ const UserRoute = require('./routes/users')
 const cloudinary = require('cloudinary').v2
 const mongoose = require('mongoose')
 const AuthController = require('./middleware/auth')
-const session = require('express-session')
+const cors  = require('cors')
 const AuthRoute = require('./routes/auth')
 var bodyParser = require('body-parser')
-
 const app = express()
 
+const corsOptions = {
+    origin: 'http://localhost:3000/',
+    optionsSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions))
 //middle ware
 app.use(bodyParser.json({
     limit:'50mb'
@@ -18,12 +23,7 @@ cloudinary.config({
     api_key: "677343416814958",
     api_secret: "iMckkluYXpg7YdukJbG6e-IVuco"
 });
-app.use((req,res,next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATH, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    next()
-})
+
 app.use(AuthRoute)
 app.use(AuthController.isAuth)
 

@@ -8,6 +8,7 @@ router.get('/students', usersController.getStudents)
 router.get('/teachers', usersController.getTeacher)
 router.post('/users', usersController.postUser)
 router.delete('/user/:id', usersController.deleteUser)
-router.patch('/user/:id', usersController.updateUser)
+router.put('/user/:id', usersController.updateUser)
+router.get('/user/:id', usersController.getUser)
 
 module.exports = router;

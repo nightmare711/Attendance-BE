@@ -21,7 +21,7 @@ exports.userLogin = (req,res,next) => {
             tokenList[refreshToken] = {accessToken, refreshToken}
             return res.status(200).json({
                 message: 'Login successfully',
-                user: result,
+                user: account[0]._id,
                 accessToken: accessToken,
                 refreshToken: refreshToken
             })
