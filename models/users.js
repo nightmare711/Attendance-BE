@@ -21,6 +21,13 @@ const userSchema = new mongoose.Schema({
     },
     imgUrl: {
         type: String, 
+    },
+    studentId: {
+        type: String,
+    },
+    idFB: {
+        type:String,
+        required:true
     }
 }, {
     timestamps: true

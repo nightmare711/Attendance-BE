@@ -28,7 +28,7 @@ exports.getStudents = (req,res,next) => {
         const students = result.filter(user => !user.isTeacher)
         return res.status(200).json({
             message: 'Get students successfully',
-            users: students
+            result: students
         })
     }).catch(err => res.status(500).json({
         message:'Something went wrong',
@@ -39,8 +39,8 @@ exports.getTeacher = (req,res,next) => {
     return User.find().then(result => {
         const teacher = result.filter(user => user.isTeacher)
         return res.status(200).json({
-            message: 'Get students successfully',
-            users: teacher
+            message: 'Get teacher successfully',
+            result: teacher
         })
     }).catch(err => res.status(500).json({
         message:'Something went wrong',
@@ -56,6 +56,8 @@ exports.postUser = (req,res,next) => {
     const createdAt = new Date()
     const phoneNumber = req.body.phoneNumber
     const base64 = req.body.base64
+    const studentId = req.body.studentId
+    const idFB = req.body.idFB
     return cloudinary.uploader.upload(base64, {
         overwrite: true,
         invalidate: true,
@@ -70,7 +72,9 @@ exports.postUser = (req,res,next) => {
                 dateOfBirth,
                 createdAt,
                 phoneNumber,
-                imgUrl: resUp.secure_url
+                imgUrl: resUp.secure_url,
+                studentId,
+                idFB,
             })
             console.log({name,
                 isTeacher,
@@ -82,7 +86,7 @@ exports.postUser = (req,res,next) => {
                 imgUrl: resUp.secure_url})
             return user.save().then(result => res.status(201).json({
                 message: 'Post created successfully',
-                user: result
+                result: result
             })).catch(err => res.status(500).json({
                 message: 'Something went wrong!',
                 error: err

@@ -3,8 +3,9 @@ const UserRoute = require('./routes/users')
 const cloudinary = require('cloudinary').v2
 const mongoose = require('mongoose')
 const AuthController = require('./middleware/auth')
-const cors  = require('cors')
 const AuthRoute = require('./routes/auth')
+const SubjectRoute = require('./routes/subject')
+const cors = require('cors')
 var bodyParser = require('body-parser')
 
 const app = express()
@@ -19,15 +20,24 @@ cloudinary.config({
     api_key: "677343416814958",
     api_secret: "iMckkluYXpg7YdukJbG6e-IVuco"
 });
-app.use((req,res,next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000/')
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    next()
-})
+app.use(cors())
+// app.use((req,res,next) => {
+//     var origin = req.header('Referer')
+//     if(origin !== 'http://localhost:3000/') {
+//         res.status(404).json({
+//             message: 'Request access rejected',
+//         })
+//         res.end()
+//     } else {
+//         res.setHeader('Access-Control-Allow-Origin', '*')
+//         res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE')
+//         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+//         next()
+//     }
+// })
 app.use(AuthRoute)
-app.use(AuthController.isAuth)
-
+// app.use(AuthController.isAuth)
+app.use('/subject', SubjectRoute)
 app.use(UserRoute)
 
-mongoose.connect('mongodb+srv://blockmagic:mGpoGQWeo2uDZD4q@cluster0.563wo.mongodb.net/users').then(() => app.listen(process.env.PORT || 5000, () => console.log('app listen at port 4000'))).catch(err => console.log(err))
+mongoose.connect('mongodb+srv://blockmagic:mGpoGQWeo2uDZD4q@cluster0.563wo.mongodb.net/users').then(() => app.listen(process.env.PORT || 4200, () => console.log('app listen at port 4000'))).catch(err => console.log(err))
