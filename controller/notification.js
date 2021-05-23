@@ -13,6 +13,39 @@ exports.getNotification = (req,res,next) => {
         })
     })
 }
+exports.getNotificationBySubjectId = (req,res,next) => {
+    const {teacherId, subjectId} = req.body
+    return Notification.find({
+        teacherId: teacherId,
+        subjectId: subjectId
+    }).then(result => res.status(201).json({
+        message: 'successful',
+        status: 1,
+        result: result
+    })).catch(err => {
+        console.log(err)
+        return res.status(500).json({
+            status:0,
+            message: 'failed',
+        })
+    })
+}
+exports.getNotificationByTeacherId = (req,res,next) => {
+    const {teacherId} = req.body
+    return Notification.find({
+        teacherId: teacherId,
+    }).then(result => res.status(201).json({
+        message: 'successful',
+        status: 1,
+        result: result
+    })).catch(err => {
+        console.log(err)
+        return res.status(500).json({
+            status:0,
+            message: 'failed',
+        })
+    })
+}
 exports.postNotification = (req,res,next) => {
     const {
         title,

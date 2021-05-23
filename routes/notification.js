@@ -4,3 +4,6 @@ const router = express.Router()
 
 router.get('/', NotificationController.getNotification)
 router.post('/', NotificationController.postNotification)
+router.post('/filter', NotificationController.getNotificationByTeacherId)
+
+module.exports = router
