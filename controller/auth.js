@@ -23,7 +23,8 @@ exports.userLogin = (req,res,next) => {
                 message: 'Login successfully',
                 user: account[0]._id,
                 accessToken: accessToken,
-                refreshToken: refreshToken
+                refreshToken: refreshToken,
+                studentId: account[0].studentId
             })
         } else {
             return res.status(404).json({
