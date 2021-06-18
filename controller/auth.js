@@ -24,7 +24,8 @@ exports.userLogin = (req,res,next) => {
                 user: account[0]._id,
                 accessToken: accessToken,
                 refreshToken: refreshToken,
-                studentId: account[0].studentId
+                studentId: account[0].studentId,
+                isTeacher: account[0].isTeacher
             })
         } else {
             return res.status(404).json({

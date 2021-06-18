@@ -165,6 +165,7 @@ exports.getSubjectOfStudent = (req,res,next) => {
         const subjectOwn = []
         const users = await Users.find()
         if(result) {
+            console.log(result)
             for(let i = 0; i < result.length; i++) {
                 if(result[i].studentsId.includes(studentId)) {
                     const teacher = users.find(user => user._id.toString() === result[i].teacherId)
@@ -180,7 +181,8 @@ exports.getSubjectOfStudent = (req,res,next) => {
                         teacherEmail: teacher.email,
                         phoneNumber: teacher.phoneNumber,
                         imgUrl: teacher.imgUrl,
-                        idFB: teacher.idFB
+                        idFB: teacher.idFB,
+                        attendanceTime: result[i].attendanceTime
                     }
                     subjectOwn.push(Obj)
                 }
